@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books</title>
+</head>
+
+<body>
+
+    <h1>Library Books</h1>
+
+    {% for book in books %}
+
+        <h2>{{ book.title }}</h2>
+
+        <p>Pages: {{ book.pages }}</p>
+        <p>Price: {{ book.price }}</p>
+        <p>Publish Date: {{ book.publish_date }}</p>
+
+        <hr>
+
+    {% endfor %}
+
+</body>
+</html>
