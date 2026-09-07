@@ -1,15 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
+    <meta charset="UTF-8">
     <title>Library Management</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            width: 500px;
+            padding: 50px;
+            text-align: center;
+
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 35px;
+        }
+
+        .books-button {
+            display: inline-block;
+
+            padding: 14px 30px;
+
+            background-color: #333;
+            color: white;
+
+            text-decoration: none;
+            border-radius: 8px;
+
+            font-size: 16px;
+        }
+
+        .books-button:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Library Management System</h1>
+    <div class="container">
 
-    <a href="{% url 'book-list' %}">
-        مشاهده کتاب‌ها
-    </a>
+        <h1>به کتابخانه خوش آمدید 📚</h1>
+
+        <p>
+            به سیستم مدیریت کتابخانه خوش آمدید.
+            برای مشاهده کتاب‌های موجود روی دکمه زیر کلیک کنید.
+        </p>
+
+        <a class="books-button" href="{% url 'book-list' %}">
+            مشاهده کتاب‌ها
+        </a>
+
+    </div>
 
 </body>
-</html>
+

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Book
-from .forms import BookForm
+from .forms import BookForm, AuthorForm, CategoryForm
 
 
 
@@ -31,3 +31,33 @@ def book_create(request):
     return render(request, 'library/book_create.html', {
         'form': form
     })
+
+
+
+def add_author(request):
+
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('book-create')
+
+    else:
+        form = AuthorForm()
+
+    return render(request, 'library/add_author.html', {'form': form})
+
+def add_category(request):
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('book-create')
+
+    else:
+        form = CategoryForm()
+
+    return render(request, 'library/add_category.html', {'form': form})

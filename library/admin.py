@@ -7,7 +7,10 @@ admin.site.register(Category)
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'get_authors', 'publish_date','pages', 'id', 'price' )
+    list_display = ('title', 'get_authors','category', 'publish_date','pages', 'id', 'price' )
+
+    search_fields = ("title",)
+    list_filter = ("category",)
 
     @admin.display(description='Authors')
     def get_authors(self, obj):

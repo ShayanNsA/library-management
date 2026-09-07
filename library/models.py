@@ -1,8 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError # این رو ایمپورت میکنیم تا فراخوانی درست انجام شود
 
-# Create your models here.
-
 class Book(models.Model):
 
     title = models.CharField(max_length=50)
@@ -28,7 +26,6 @@ class Author(models.Model):
         ]
 
     def clean(self):
-        # اعمال همان منطق تمیزکاری که یاد گرفتی
         if self.first_name:
             self.first_name = self.first_name.strip()
         if self.last_name:

@@ -1,26 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
-    <title>Books</title>
+    <meta charset="UTF-8">
+    <title>Library Management</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 40px;
+
+            background-color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .add-book {
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            background-color: #333;
+            color: white;
+
+            border-radius: 6px;
+        }
+
+        .add-book:hover {
+            background-color: #555;
+        }
+
+        .books-container {
+            width: 90%;
+            margin: 40px auto;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .book-card {
+            background-color: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-card h2 {
+            margin-top: 0;
+        }
+
+        .book-card p {
+            margin: 8px 0;
+        }
+    </style>
 </head>
 
 <body>
-    <a href="{% url 'book-create' %}">
-    + افزودن کتاب
-    </a>
-    <h1>Library Books</h1>
 
-    {% for book in books %}
+    <div class="header">
 
-        <h2>{{ book.title }}</h2>
+        <h1>Library Management System</h1>
 
-        <p>Pages: {{ book.pages }}</p>
-        <p>Price: {{ book.price }}</p>
-        <p>Publish Date: {{ book.publish_date }}</p>
+        <a class="add-book" href="{% url 'book-create' %}">
+            + افزودن کتاب
+        </a>
 
-        <hr>
+    </div>
 
-    {% endfor %}
+
+    <div class="books-container">
+
+        {% for book in books %}
+
+            <div class="book-card">
+
+                <h2>{{ book.title }}</h2>
+
+                <p>
+                    <strong>نویسندگان:</strong>
+
+                    {% for author in book.authors.all %}
+                        {{ author.first_name }} {{ author.last_name }}
+
+                        {% if not forloop.last %}
+                            ,
+                        {% endif %}
+
+                    {% endfor %}
+                </p>
+
+                <p>
+                    <strong>ژانر:</strong>
+                    {{ book.category.title }}
+                </p>
+
+                <p>
+                    <strong>تاریخ انتشار:</strong>
+                    {{ book.publish_date }}
+                </p>
+
+                <p>
+                    <strong>تعداد صفحات:</strong>
+                    {{ book.pages }}
+                </p>
+
+                <p>
+                    <strong>قیمت:</strong>
+                    {{ book.price }}
+                </p>
+
+            </div>
+
+        {% empty %}
+
+            <p>هنوز هیچ کتابی در کتابخانه ثبت نشده است.</p>
+
+        {% endfor %}
+
+    </div>
 
 </body>
-</html>
+

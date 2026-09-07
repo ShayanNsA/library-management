@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Genre</title>
+</head>
+
+<body>
+
+    <h1>Add Genre</h1>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Add Genre
+        </button>
+
+    </form>
+
+    <a href="{% url 'book-create' %}">
+        Back to Add Book
+    </a>
+
+</body>
+</html>
