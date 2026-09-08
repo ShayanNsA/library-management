@@ -1,23 +1,28 @@
-<!DOCTYPE html>
+
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
     <title>Library Management</title>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
         }
 
+        /* Header */
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             padding: 20px 40px;
-
             background-color: white;
         }
 
@@ -27,111 +32,734 @@
 
         .add-book {
             text-decoration: none;
-
             padding: 10px 18px;
-
             background-color: #333;
             color: white;
-
             border-radius: 6px;
         }
 
-        .add-book:hover {
-            background-color: #555;
+        /* Main Layout */
+
+        .main-container {
+            width: 92%;
+            margin: 35px auto;
+
+            display: flex;
+            gap: 30px;
+
+            align-items: flex-start;
         }
 
-        .books-container {
-            width: 90%;
-            margin: 40px auto;
+        /* Filters */
 
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
         }
 
-        .book-card {
+        .filters {
             background-color: white;
-
             padding: 20px;
 
             border-radius: 10px;
 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .filters h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .filter-box {
+            margin-bottom: 30px;
+        }
+
+        .filter-box h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Search */
+
+        .search-input {
+            width: 100%;
+
+            padding: 10px;
+
+            border: 1px solid #ccc;
+            border-radius: 6px;
+
+            font-size: 14px;
+        }
+
+        /* Range */
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+        }
+
+        .range-container {
+            position: relative;
+            height: 30px;
+        }
+
+        .range-container input[type="range"] {
+            position: absolute;
+
+            width: 100%;
+
+            pointer-events: none;
+
+            appearance: none;
+
+            background: transparent;
+        }
+
+        .range-container input[type="range"]::-webkit-slider-thumb {
+            pointer-events: auto;
+
+            appearance: none;
+
+            width: 18px;
+            height: 18px;
+
+            border-radius: 50%;
+
+            background-color: #333;
+
+            cursor: pointer;
+        }
+
+        .range-container input[type="range"]::-moz-range-thumb {
+            pointer-events: auto;
+
+            width: 18px;
+            height: 18px;
+
+            border-radius: 50%;
+
+            background-color: #333;
+
+            cursor: pointer;
+
+            border: none;
+        }
+
+        /* Filter Buttons */
+
+        .apply-filter {
+            width: 100%;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background-color: #333;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .apply-filter:hover {
+            background-color: #555;
+        }
+
+        .reset-filter {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 10px;
+
+            padding: 9px;
+
+            text-decoration: none;
+
+            background-color: #eee;
+
+            color: #333;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+        }
+
+        /* Books Area */
+
+        .books-area {
+            flex: 1;
+        }
+
+        /* Bulk Delete */
+
+        .bulk-delete {
+            margin-bottom: 20px;
+
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background-color: #c0392b;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .bulk-delete:hover {
+            background-color: #a93226;
+        }
+
+        /* Books Grid */
+
+        .books-container {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        /* Book Card */
+
+        .book-card {
+            position: relative;
+
+            background-color: white;
+
+            padding: 17px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+            transition: 0.2s;
+        }
+
+        .book-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .book-card h2 {
             margin-top: 0;
+
+            font-size: 19px;
         }
 
         .book-card p {
-            margin: 8px 0;
+            margin: 7px 0;
+
+            font-size: 14px;
         }
+
+        .book-link {
+            text-decoration: none;
+
+            color: inherit;
+        }
+
+        /* Checkbox */
+
+        .select-book {
+            position: absolute;
+
+            top: 15px;
+            right: 15px;
+
+            width: 17px;
+            height: 17px;
+
+            cursor: pointer;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 1000px) {
+
+            .books-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .books-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <div class="header">
 
-        <h1>Library Management System</h1>
+<!-- Header -->
 
-        <a class="add-book" href="{% url 'book-create' %}">
-            + افزودن کتاب
-        </a>
+<div class="header">
 
-    </div>
+    <h1>Library Management System</h1>
+
+    <a class="add-book" href="{% url 'book-create' %}">
+        + افزودن کتاب
+    </a>
+
+</div>
 
 
-    <div class="books-container">
+<!-- Main -->
 
-        {% for book in books %}
+<div class="main-container">
 
-            <div class="book-card">
 
-                <h2>{{ book.title }}</h2>
+    <!-- Sidebar -->
 
-                <p>
-                    <strong>نویسندگان:</strong>
+    <aside class="sidebar">
 
-                    {% for author in book.authors.all %}
-                        {{ author.first_name }} {{ author.last_name }}
+        <form method="GET" action="{% url 'book-list' %}">
 
-                        {% if not forloop.last %}
-                            ,
-                        {% endif %}
+            <div class="filters">
 
-                    {% endfor %}
-                </p>
+                <h2>فیلترها</h2>
 
-                <p>
-                    <strong>ژانر:</strong>
-                    {{ book.category.title }}
-                </p>
 
-                <p>
-                    <strong>تاریخ انتشار:</strong>
-                    {{ book.publish_date }}
-                </p>
+                <!-- Search -->
 
-                <p>
-                    <strong>تعداد صفحات:</strong>
-                    {{ book.pages }}
-                </p>
+                <div class="filter-box">
 
-                <p>
-                    <strong>قیمت:</strong>
-                    {{ book.price }}
-                </p>
+                    <h3>جستجو</h3>
+
+                    <input
+                        class="search-input"
+                        type="text"
+                        name="search"
+                        placeholder="نام کتاب یا نویسنده..."
+                        value="{{ search }}"
+                    >
+
+                </div>
+
+
+                <!-- Price -->
+
+                <div class="filter-box">
+
+                    <h3>قیمت</h3>
+
+                    <div class="range-values">
+
+                        <span>
+                            از
+                            <strong id="min-price-value">
+                                {{ min_price }}
+                            </strong>
+                        </span>
+
+                        <span>
+                            تا
+                            <strong id="max-price-value">
+                                {{ max_price }}
+                            </strong>
+                        </span>
+
+                    </div>
+
+
+                    <div class="range-container">
+
+                        <input
+                            type="range"
+                            id="min-price"
+                            name="min_price"
+
+                            min="0"
+                            max="3000000"
+
+                            value="{{ min_price }}"
+                        >
+
+                        <input
+                            type="range"
+                            id="max-price"
+                            name="max_price"
+
+                            min="0"
+                            max="3000000"
+
+                            value="{{ max_price }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Publish Year -->
+
+                <div class="filter-box">
+
+                    <h3>سال انتشار</h3>
+
+                    <div class="range-values">
+
+                        <span>
+                            از
+                            <strong id="start-year-value">
+                                {{ start_year }}
+                            </strong>
+                        </span>
+
+                        <span>
+                            تا
+                            <strong id="end-year-value">
+                                {{ end_year }}
+                            </strong>
+                        </span>
+
+                    </div>
+
+
+                    <div class="range-container">
+
+                        <input
+                            type="range"
+                            id="start-year"
+                            name="start_year"
+
+                            min="1900"
+                            max="2030"
+
+                            value="{{ start_year }}"
+                        >
+
+                        <input
+                            type="range"
+                            id="end-year"
+                            name="end_year"
+
+                            min="1900"
+                            max="2030"
+
+                            value="{{ end_year }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Apply -->
+
+                <button
+                    type="submit"
+                    class="apply-filter"
+                >
+                    اعمال فیلتر
+                </button>
+
+
+                <a
+                    href="{% url 'book-list' %}"
+                    class="reset-filter"
+                >
+                    حذف فیلترها
+                </a>
 
             </div>
 
-        {% empty %}
+        </form>
 
-            <p>هنوز هیچ کتابی در کتابخانه ثبت نشده است.</p>
+    </aside>
 
-        {% endfor %}
 
-    </div>
+    <!-- Books -->
+
+    <main class="books-area">
+
+
+        <!-- Bulk Delete -->
+
+        <form
+            method="POST"
+            action="{% url 'book-bulk-delete' %}"
+
+            onsubmit="
+                return confirm(
+                    'آیا از حذف کتاب‌های انتخاب شده مطمئن هستید؟'
+                );
+            "
+        >
+
+            {% csrf_token %}
+
+
+            <button
+                type="submit"
+                class="bulk-delete"
+            >
+                🗑️ حذف کتاب‌های انتخاب شده
+            </button>
+
+
+            <!-- Books Grid -->
+
+            <div class="books-container">
+
+                {% for book in books %}
+
+
+                    <div class="book-card">
+
+
+                        <input
+                            type="checkbox"
+
+                            name="selected_books"
+
+                            value="{{ book.id }}"
+
+                            class="select-book"
+                        >
+
+
+                        <a
+                            class="book-link"
+
+                            href="{% url 'book-detail' book.id %}"
+                        >
+
+                            <h2>
+                                {{ book.title }}
+                            </h2>
+
+
+                            <p>
+
+                                <strong>
+                                    نویسندگان:
+                                </strong>
+
+                                {% for author in book.authors.all %}
+
+                                    {{ author.first_name }}
+                                    {{ author.last_name }}
+
+                                    {% if not forloop.last %}
+                                        ,
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    ژانر:
+                                </strong>
+
+                                {{ book.category.title }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    تاریخ انتشار:
+                                </strong>
+
+                                {{ book.publish_date }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    تعداد صفحات:
+                                </strong>
+
+                                {{ book.pages }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    قیمت:
+                                </strong>
+
+                                {{ book.price }}
+
+                            </p>
+
+
+                        </a>
+
+                    </div>
+
+
+                {% empty %}
+
+                    <p>
+                        کتابی با این مشخصات پیدا نشد.
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+
+        </form>
+
+
+    </main>
+
+
+</div>
+
+
+<script>
+
+
+    /* =========================
+       PRICE
+    ========================= */
+
+    const minPrice =
+        document.getElementById("min-price");
+
+    const maxPrice =
+        document.getElementById("max-price");
+
+    const minPriceValue =
+        document.getElementById("min-price-value");
+
+    const maxPriceValue =
+        document.getElementById("max-price-value");
+
+
+    minPrice.addEventListener("input", function () {
+
+        if (
+            parseInt(minPrice.value)
+            >
+            parseInt(maxPrice.value)
+        ) {
+
+            minPrice.value =
+                maxPrice.value;
+
+        }
+
+        minPriceValue.textContent =
+            minPrice.value;
+
+    });
+
+
+    maxPrice.addEventListener("input", function () {
+
+        if (
+            parseInt(maxPrice.value)
+            <
+            parseInt(minPrice.value)
+        ) {
+
+            maxPrice.value =
+                minPrice.value;
+
+        }
+
+        maxPriceValue.textContent =
+            maxPrice.value;
+
+    });
+
+
+    /* =========================
+       YEAR
+    ========================= */
+
+    const startYear =
+        document.getElementById("start-year");
+
+    const endYear =
+        document.getElementById("end-year");
+
+    const startYearValue =
+        document.getElementById("start-year-value");
+
+    const endYearValue =
+        document.getElementById("end-year-value");
+
+
+    startYear.addEventListener("input", function () {
+
+        if (
+            parseInt(startYear.value)
+            >
+            parseInt(endYear.value)
+        ) {
+
+            startYear.value =
+                endYear.value;
+
+        }
+
+        startYearValue.textContent =
+            startYear.value;
+
+    });
+
+
+    endYear.addEventListener("input", function () {
+
+        if (
+            parseInt(endYear.value)
+            <
+            parseInt(startYear.value)
+        ) {
+
+            endYear.value =
+                startYear.value;
+
+        }
+
+        endYearValue.textContent =
+            endYear.value;
+
+    });
+
+
+</script>
+
 
 </body>
 

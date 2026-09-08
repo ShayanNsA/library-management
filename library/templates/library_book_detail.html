@@ -1,0 +1,148 @@
+
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ book.title }}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        .book-container {
+            width: 600px;
+            margin: 50px auto;
+
+            background-color: white;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .book-info {
+            margin-top: 25px;
+        }
+
+        .book-info p {
+            margin: 12px 0;
+        }
+
+        .actions {
+            margin-top: 30px;
+        }
+
+        .actions a,
+        .actions button {
+            display: inline-block;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            margin-right: 10px;
+
+            border-radius: 6px;
+
+            background-color: #333;
+            color: white;
+
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .actions a:hover,
+        .actions button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="book-container">
+
+        <h1>{{ book.title }}</h1>
+
+        <div class="book-info">
+
+            <p>
+                <strong>نویسندگان:</strong>
+
+                {% for author in book.authors.all %}
+
+                    {{ author.first_name }} {{ author.last_name }}
+
+                    {% if not forloop.last %}
+                        ,
+                    {% endif %}
+
+                {% endfor %}
+            </p>
+
+            <p>
+                <strong>ژانر:</strong>
+                {{ book.category.title }}
+            </p>
+
+            <p>
+                <strong>تاریخ انتشار:</strong>
+                {{ book.publish_date }}
+            </p>
+
+            <p>
+                <strong>تعداد صفحات:</strong>
+                {{ book.pages }}
+            </p>
+
+            <p>
+                <strong>قیمت:</strong>
+                {{ book.price }}
+            </p>
+
+        </div>
+
+
+        <div class="actions">
+
+            <!-- Update -->
+            <a href="{% url 'book-update' book.id %}">
+                Update
+            </a>
+
+
+            <!-- Delete -->
+            <form method="POST"
+                  action="{% url 'book-delete' book.id %}"
+                  style="display: inline;"
+                  onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کتاب را حذف کنید؟');">
+
+                {% csrf_token %}
+
+                <button type="submit">
+                    Delete
+                </button>
+
+            </form>
+
+
+            <!-- Back -->
+            <a href="{% url 'book-list' %}">
+                Back to Books
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+

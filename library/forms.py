@@ -15,6 +15,8 @@ class BookForm(forms.ModelForm):
             'authors',
         ]
 
+        widgets = {'publish_date': forms.DateInput(attrs={'type': 'date'}), }
+
     def clean_price(self):
         price = self.cleaned_data['price']
         if price <= 0:
